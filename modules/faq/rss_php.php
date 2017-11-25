@@ -151,7 +151,11 @@ class rss_php {
             'http'=>array(
                 'method'=>"GET",
                 'header'=>$setHeaders
-            )
+            ),
+            'ssl' => array(
+				'verify_peer' => false,
+				'verify_peer_name' => false
+			)
         );
         return stream_context_create($contextOptions);
     }
