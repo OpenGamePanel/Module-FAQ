@@ -57,6 +57,13 @@ function exec_ogp_module()
 	echo "<script>console.log('Last Update : ".date("r", filemtime($save_as))."\\nCurrent Time: ".date('r',time())."\\nNext Update : ".date('r', strtotime("+1 day", filemtime($save_as)))."');</script>";
 	if( ($local AND ( strtotime("+1 day", filemtime($save_as)) <= strtotime("now") )) OR !$local) # Check the file is older than 1 day to avoid spamming the server
 	{
+		stream_context_set_default( [
+			'ssl' => [
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+			],
+		]);
+		
 		$headers = get_headers( $url, 1 );
 		touch( $save_as ); # Connection done, so we reset the file modification time even if the server is down (avoid server spamming)
 		echo "<script>console.log('Trying to connect to ".$url."');</script>";
