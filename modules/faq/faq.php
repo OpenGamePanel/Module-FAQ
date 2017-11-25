@@ -35,14 +35,15 @@ function exec_ogp_module()
 		 '<input class=search name=search id=search type=text placeholder="Search"/></div><br></div>';
 
 	require 'modules/faq/rss_php.php';
-	$url = 'http://opengamepanel.org/faq/rss.php';
+	$url = 'https://opengamepanel.org/faq/rss.php';
 	$local_copy = 'modules/faq/ogpfaq.rss'; ## Relative path
 	$save_as = realpath('modules' . DIRECTORY_SEPARATOR . 'faq') . DIRECTORY_SEPARATOR . 'ogpfaq.rss'; 
 	## Full path (adding the filename to realpath would fail if the file does not exists yet)
 	$online = false;
 	$local = false;
 	$updated = false;
-	$s = ( isset($_SERVER['HTTPS']) and  get_true_boolean($_SERVER['HTTPS']) ) ? "s" : "";
+	$s = (isset($_SERVER['HTTPS'])) ? "s" : "";
+	$p = (isset($_SERVER['SERVER_PORT']) and $_SERVER['SERVER_PORT'] != "80") ? ":".$_SERVER['SERVER_PORT'] : "";
 	$p = (isset($_SERVER['SERVER_PORT']) and $_SERVER['SERVER_PORT'] != "80") ? ":".$_SERVER['SERVER_PORT'] : "";
 	$local_url = 'http'.$s.'://'.$_SERVER['SERVER_NAME'].$p.$_SERVER['SCRIPT_NAME'];
 	$local_url = str_replace('home.php', $local_copy, $local_url);
