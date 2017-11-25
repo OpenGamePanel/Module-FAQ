@@ -44,7 +44,11 @@ function exec_ogp_module()
 	$updated = false;
 	$s = (isset($_SERVER['HTTPS'])) ? "s" : "";
 	$p = (isset($_SERVER['SERVER_PORT']) and $_SERVER['SERVER_PORT'] != "80") ? ":".$_SERVER['SERVER_PORT'] : "";
-	$local_url = 'http'.$s.'://'.$_SERVER['SERVER_NAME'].$p.$_SERVER['SCRIPT_NAME'];
+	$localServerURL = $_SERVER['SERVER_NAME'];
+	if($localServerURL == "_"){
+		$localServerURL = "localhost";
+	}
+	$local_url = 'http'.$s.'://'.$localServerURL.$p.$_SERVER['SCRIPT_NAME'];
 	$local_url = str_replace('home.php', $local_copy, $local_url);
 	if(file_exists($save_as))
 	{
